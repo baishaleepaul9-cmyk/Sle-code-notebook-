@@ -1,64 +1,130 @@
-# Sle-code-notebook-# SLE Transcriptomic Biomarker Discovery and Diagnostic Prediction
+# SLE Transcriptomic Biomarker Discovery, Diagnostic Prediction, and Disease Severity Prediction
 
 ## Overview
 
-This repository contains the code used for the discovery of transcriptomic biomarkers and the development of a machine learning-based diagnostic model for **Systemic Lupus Erythematosus (SLE)** using publicly available gene expression datasets from the Gene Expression Omnibus (GEO).
+This repository contains the complete computational workflow for identifying transcriptomic biomarkers, developing a diagnostic machine learning model for Systemic Lupus Erythematosus (SLE), and predicting disease severity using publicly available gene expression datasets from the NCBI Gene Expression Omnibus (GEO).
 
-The workflow includes data preprocessing, feature selection, biomarker identification, machine learning model development, model evaluation, calibration, external validation, and biomarker interpretation.
+The pipeline includes:
 
----
-
-## Objectives
-
-- Identify transcriptomic biomarkers associated with SLE.
-- Develop an accurate diagnostic prediction model.
-- Evaluate model performance using multiple metrics.
-- Validate the model on an independent external dataset.
-- Provide an interpretable and reproducible computational workflow.
+- Gene expression data acquisition
+- Data preprocessing and normalization
+- Probe-to-gene annotation
+- Feature selection
+- Biomarker discovery
+- Diagnostic model development
+- Disease severity prediction
+- Model evaluation
+- Probability calibration
+- External validation
+- Visualization and interpretation
 
 ---
 
 ## Datasets
 
-Publicly available datasets were obtained from the NCBI Gene Expression Omnibus (GEO).
+### Diagnostic Prediction
 
-### Discovery Dataset
-- **GSE65391**
+| Dataset | Purpose |
+|---------|---------|
+| **GSE65391** | Discovery and model training |
+| **GSE61635** | Independent external validation |
 
-### External Validation Dataset
-- **GSE61635**
+### Disease Severity Prediction
+
+| Dataset | Purpose |
+|---------|---------|
+| **GSE88884** | Prediction of disease severity using SLEDAI scores |
+
+All datasets were downloaded directly from the NCBI Gene Expression Omnibus (GEO).
+
+---
+
+## Repository Contents
+
+This repository consists of two independent machine learning workflows.
+
+### 1. Diagnostic Prediction
+
+The diagnostic pipeline develops a transcriptomic classifier capable of distinguishing SLE patients from healthy controls.
+
+Major steps include:
+
+- Downloading GEO datasets
+- Probe annotation (GPL10558)
+- Data preprocessing
+- Gene-level expression matrix generation
+- Feature selection
+- Biomarker identification
+- Model training
+- Performance evaluation
+- Calibration
+- External validation using GSE61635
+
+---
+
+### 2. Disease Severity Prediction
+
+The severity pipeline predicts disease severity using transcriptomic profiles and clinical SLEDAI scores.
+
+Major steps include:
+
+- Loading GSE88884
+- Data preprocessing
+- Spearman correlation-based gene selection
+- Severity-associated biomarker discovery
+- Machine learning model development
+- Model evaluation
+- Visualization of severity-associated genes
 
 ---
 
 ## Workflow
 
-1. Download GEO datasets
-2. Data preprocessing and normalization
-3. Probe-to-gene annotation
-4. Feature selection
-5. Biomarker identification
-6. Machine learning model training
-7. Model evaluation
-8. Calibration
-9. External validation
-10. Visualization and interpretation
+```
+GEO Download
+      │
+      ▼
+Data Preprocessing
+      │
+      ▼
+Probe Annotation
+      │
+      ▼
+Gene Expression Matrix
+      │
+      ▼
+Feature Selection
+      │
+      ├──────────────┐
+      ▼              ▼
+Diagnostic Model   Severity Model
+      │              │
+      ▼              ▼
+Evaluation      Severity Prediction
+      │
+      ▼
+Calibration
+      │
+      ▼
+External Validation
+```
 
 ---
 
 ## Machine Learning Models
 
-The notebook evaluates multiple classification algorithms, including:
+The notebook evaluates multiple supervised learning algorithms, including:
 
 - Logistic Regression
 - Random Forest
 - Support Vector Machine (SVM)
 - XGBoost
 
-The best-performing model is selected based on diagnostic performance.
+The best-performing models are selected based on evaluation metrics.
 
 ---
 
-## Performance Metrics
+## Evaluation Metrics
 
 Model performance is assessed using:
 
@@ -71,6 +137,8 @@ Model performance is assessed using:
 - Calibration Curve
 - Brier Score
 
+For severity prediction, correlation-based feature selection and predictive performance are also evaluated.
+
 ---
 
 ## Repository Structure
@@ -79,8 +147,9 @@ Model performance is assessed using:
 .
 ├── experimental_sle_project.ipynb
 ├── experimental_sle_project.py
-├── requirements.txt
 ├── README.md
+├── requirements.txt
+├── LICENSE
 └── figures/
 ```
 
@@ -88,19 +157,20 @@ Model performance is assessed using:
 
 ## Requirements
 
-Python 3.10+
+Python 3.10 or later
 
-Major libraries:
+Required packages include:
 
-- pandas
 - numpy
+- pandas
+- scipy
 - scikit-learn
 - xgboost
 - matplotlib
 - seaborn
-- scipy
 - GEOparse
 - shap
+- joblib
 
 Install dependencies using:
 
@@ -110,21 +180,21 @@ pip install -r requirements.txt
 
 ---
 
-## Running the Code
+## Running the Project
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/your-repository.git
+git clone https://github.com/<username>/<repository>.git
 ```
 
-Open either:
+Run the notebook using:
 
-- `experimental_sle_project.ipynb` in Jupyter Notebook or Google Colab
+```text
+experimental_sle_project.ipynb
+```
 
-or
-
-Run the Python script:
+or execute the Python script:
 
 ```bash
 python experimental_sle_project.py
@@ -134,13 +204,17 @@ python experimental_sle_project.py
 
 ## Data Availability
 
-All datasets used in this study are publicly available through the NCBI Gene Expression Omnibus (GEO).
+The datasets used in this study are publicly available through the NCBI Gene Expression Omnibus (GEO):
+
+- GSE65391
+- GSE61635
+- GSE88884
 
 ---
 
-## Citation
+## Reproducibility
 
-If you use this code in your research, please cite the corresponding publication once available.
+The repository contains all code required to reproduce the analyses presented in the accompanying manuscript. Users only need to download the GEO datasets (performed automatically within the notebook or script) and install the required Python dependencies.
 
 ---
 
@@ -148,45 +222,11 @@ If you use this code in your research, please cite the corresponding publication
 
 **Baishalee Paul**
 
-B.Tech Bioinformatics  
-Amity University, Noida
+Department of Bioinformatics  
+Amity University, Noida, India
 
 ---
 
 ## License
 
-This project is released under the MIT License.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+This project is distributed under the MIT License.
